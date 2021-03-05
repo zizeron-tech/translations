@@ -2,6 +2,7 @@
 This is a cross-project library developed by IAM Tech's team to reuse the functionalities of JSON provided translations.
 
 Library registry: [Bit.dev](https://bit.dev/iamtechnologies/translations/translations/~code)
+
 Youtube session: [View on YouTube](https://www.youtube.com/watch?v=AGrZ5fpXzVU)
 
 ## Installation
