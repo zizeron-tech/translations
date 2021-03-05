@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# IAM Tech's translations system
+This is a cross-project library developed by IAM Tech's team to reuse the functionalities of JSON provided translations.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Components
+### TranslationsContext
+React Context to comunicate languages and translations between components
 
-## Available Scripts
+### TranslationsProvider
+Provides the React Context to its children and manages the logic for producing the resulting translation.
+#### Provides:
+- language: current language set on the application
+- setLanguage(lang): sets the application language
+- getText(tag): returns the translated content corresponding to the provided tag
 
-In the project directory, you can run:
+### TagTrans: 
+Renders the translated content corresponding to the provided tag and props.
 
-### `yarn start`
+## Usage
+Cofigure the available translations:
+```js
+const TRANSLATIONS = {
+  es: { // one object for every available language
+    home_h1: 'Título principal', // Simple text translation
+    home_desc: 'ES Lorem ipsum, dolor sit...',
+    home_legal: () => (
+      <>Acepto los <a href="terminos-legal">términos y condiciones</a></>
+    ), // Translation as react component (function) combining text and HTML elements
+    contact_form_name_placeholder: 'Introduce tu nombre',
+    results_count_text: ({number, total}) => (
+      `Hay ${number} resultados de ${total}`
+    ) // Using dynamic parameters
+  },
+  en: { // same translations on different language
+    home_h1: 'Main Title',
+    home_desc: 'EN Lorem ipsum, dolor sit...',
+    home_legal: () => (<>I Accept the <a href="terminos-legal">terms and conditions</a></>),
+    contact_form_name_placeholder: 'Enter your name',
+    results_count_text: ({number, total}) => `Found ${number} results of ${total}`
+  }
+}
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Provide the translations to all the application. It works best on the root component:
+```js
+<TranslationsProvider translations={TRANSLATIONS}>
+  <App />
+</TranslationsProvider>
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Use the TagTrans component to render some translation
+- Simple text translation
+```js
+<TagTrans tag="home_h1" />
+```
 
-### `yarn test`
+- Translation with dynamic parameters
+```js
+<TagTrans tag="results_count_text" number="2" total="10" />
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Get a translated content to use on others components (like input placeholders)
+```js
+const FormInput = ({ placeholderTranslationTag }) => {
+  const { getText } = useContext(TranslationsContext);
+  const placeholderTranslationText = getText(placeholderTranslationTag);
 
-### `yarn build`
+  return <input placeholder={placeholderTranslationText} />
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
