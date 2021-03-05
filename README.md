@@ -1,6 +1,14 @@
 # IAM Tech's translations system
 This is a cross-project library developed by IAM Tech's team to reuse the functionalities of JSON provided translations.
 
+Library registry: [Bit.dev](https://bit.dev/iamtechnologies/translations/translations/~code)
+Youtube session: [View on YouTube](https://www.youtube.com/watch?v=AGrZ5fpXzVU)
+
+## Installation
+```sh
+npm i @bit/iamtechnologies.translations.translations
+```
+
 ## Components
 ### TranslationsContext
 React Context to comunicate languages and translations between components
