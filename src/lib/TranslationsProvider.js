@@ -8,7 +8,7 @@ const TranslationsProvider = ({ children, translations }) => {
   const getText = (tag, props) => {
     const translationValue = translations?.[language]?.[tag];
 
-    if (!translationValue) return '¡¡¡MISSING_TRANSLATION!!!';
+    if (!translationValue) return `¡¡¡MISSING_TRANSLATION (${tag}) !!!`;
 
     if (typeof translationValue === 'string') return translationValue;
 
